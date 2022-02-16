@@ -9,6 +9,7 @@ class UserModel with _$UserModel {
   factory UserModel({
     int? id,
     String? name,
+    String? avatar,
   }) = _User;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -16,7 +17,7 @@ class UserModel with _$UserModel {
 }
 
 extension UserExtension on UserModel {
-  Color userColor(int id) {
+  Color getColor(int id) {
     switch (id) {
       case 1:
         return Colors.blue;
