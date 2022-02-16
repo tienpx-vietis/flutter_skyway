@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skyway/core/architecture/base_view.dart';
 import 'package:flutter_skyway/presentation/group_chat/group_chat.viewmodel.dart';
 import 'package:flutter_skyway/presentation/group_chat/message_model.dart';
@@ -12,22 +13,22 @@ import 'package:intl/intl.dart';
 class GroupChatView extends BaseView<GroupChatViewModel> {
   GroupChatView({Key? key}) : super(key: key);
 
-  final vm = Get.find<GroupChatViewModel>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xff517DA2),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Call ${DateFormat('dd.MM.yyyy').format(DateTime.now())}',
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+              'Call ${viewModel.getCallTime()}',
+              style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w500),
             ),
-            const Text(
+            Text(
               '3 members',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
             ),
           ],
         ),
@@ -52,21 +53,24 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
                   Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      const Positioned(
+                      Positioned(
                         child: CircleThumbAvatar(
                           color: Colors.blue,
+                          avatar: viewModel.users[0].avatar ?? '',
                         ),
                         left: 50,
                       ),
-                      const Positioned(
+                      Positioned(
                         child: CircleThumbAvatar(
                           color: Colors.green,
+                          avatar: viewModel.users[1].avatar ?? '',
                         ),
                         left: 25,
                       ),
-                      const Positioned(
+                      Positioned(
                         child: CircleThumbAvatar(
                           color: Colors.yellow,
+                          avatar: viewModel.users[2].avatar ?? '',
                         ),
                       ),
                       Positioned(
@@ -74,29 +78,37 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
                         top: 0,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Video chat',
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500),
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff3A8CCF)),
                             ),
                             Text(
                               '3 participants',
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff999999)),
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                    child: const Text(
-                      'Back',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: SizedBox(
+                      width: 70,
+                      height: 30,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Back',
+                        ),
+                      ),
                     ),
                   )
                 ],
@@ -104,15 +116,20 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
             ),
             Expanded(
               child: Container(
-                color: Colors.grey,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/Background.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 child: Observer(
                   builder: (context) => ListView.builder(
                     reverse: true,
                     keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
-                    itemCount: vm.messages.length + 1,
+                    itemCount: viewModel.messages.length + 1,
                     itemBuilder: (context, index) {
-                      if (index == vm.messages.length) {
+                      if (index == viewModel.messages.length) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -135,11 +152,11 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
                         );
                       }
                       return SentBubleMessage(
-                        isSent: vm.messages[index].userSentId == 1,
-                        hasAvatar: vm.hasAvatar(index),
-                        messageModel: vm.messages[index],
-                        userModel:
-                            vm.users[(vm.messages[index].userSentId ?? 1) - 1],
+                        isSent: viewModel.messages[index].userSentId == 1,
+                        hasAvatar: viewModel.hasAvatar(index),
+                        messageModel: viewModel.messages[index],
+                        userModel: viewModel.users[
+                            (viewModel.messages[index].userSentId ?? 1) - 1],
                       );
                     },
                   ),
@@ -148,15 +165,15 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
             ),
             TextFormField(
               maxLines: null,
-              controller: vm.messageController,
+              controller: viewModel.messageController,
               decoration: InputDecoration(
                 hintText: 'Message',
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.fromLTRB(10, 12, 0, 0),
                 suffixIcon: IconButton(
                     onPressed: () {
-                      vm.addMessage();
-                      vm.messageController.clear();
+                      viewModel.addMessage();
+                      viewModel.messageController.clear();
                     },
                     icon: const Icon(
                       Icons.send_outlined,
