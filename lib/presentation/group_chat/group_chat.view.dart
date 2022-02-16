@@ -104,7 +104,7 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
             ),
             Expanded(
               child: Container(
-                color: Colors.red,
+                color: Colors.grey,
                 child: Observer(
                   builder: (context) => ListView.builder(
                     reverse: true,
@@ -170,5 +170,3 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
     );
   }
 }
-
-
