@@ -3,22 +3,19 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skyway/core/architecture/base_view.dart';
 import 'package:flutter_skyway/presentation/group_chat/group_chat.viewmodel.dart';
-import 'package:flutter_skyway/presentation/group_chat/message_model.dart';
-import 'package:flutter_skyway/presentation/group_chat/user_model.dart';
 import 'package:flutter_skyway/presentation/group_chat/widgets/circle_avatar.dart';
 import 'package:flutter_skyway/presentation/group_chat/widgets/message_bubble.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class GroupChatView extends BaseView<GroupChatViewModel> {
-  GroupChatView({Key? key}) : super(key: key);
+  const GroupChatView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color(0xff517DA2),
+        backgroundColor: const Color(0xff517DA2),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -84,14 +81,14 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
                               style: TextStyle(
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xff3A8CCF)),
+                                  color: const Color(0xff3A8CCF)),
                             ),
                             Text(
                               '3 participants',
                               style: TextStyle(
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xff999999)),
+                                  color: const Color(0xff999999)),
                             ),
                           ],
                         ),
@@ -116,7 +113,7 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/Background.png'),
                     fit: BoxFit.cover,
@@ -124,6 +121,7 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
                 ),
                 child: Observer(
                   builder: (context) => ListView.builder(
+                    controller: viewModel.scrollController,
                     reverse: true,
                     keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
@@ -173,7 +171,6 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
                 suffixIcon: IconButton(
                     onPressed: () {
                       viewModel.addMessage();
-                      viewModel.messageController.clear();
                     },
                     icon: const Icon(
                       Icons.send_outlined,

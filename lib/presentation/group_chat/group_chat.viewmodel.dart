@@ -18,11 +18,11 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
 
   late TextEditingController messageController;
 
+  final ScrollController scrollController = ScrollController();
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-
     messageController = TextEditingController();
 
     users = [
@@ -107,7 +107,6 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     messageController.dispose();
   }
@@ -124,6 +123,12 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
         ...messages
       ];
     }
+    messageController.clear();
+    scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 
   bool hasAvatar(int index) {

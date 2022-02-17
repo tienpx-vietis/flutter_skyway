@@ -28,7 +28,7 @@ class SentBubleMessage extends StatelessWidget {
         mainAxisAlignment:
             isSent ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          checkIfReceiveMessageHasAvatar(),
+          messageThumbAvatar(!isSent && hasAvatar),
           if (isSent)
             const SizedBox(
               width: 50,
@@ -48,7 +48,7 @@ class SentBubleMessage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(messageModel.content ?? ''),
+                    Text(messageModel.content ?? '').messageStyle(),
                     const SizedBox(
                       height: 3,
                     ),
@@ -60,7 +60,7 @@ class SentBubleMessage extends StatelessWidget {
                           color: isSent
                               ? const Color(0xff62AC55)
                               : const Color(0xffA1AAB3)),
-                    ).defaultStyle(),
+                    ),
                   ],
                 ),
               ),
@@ -73,33 +73,24 @@ class SentBubleMessage extends StatelessWidget {
           const SizedBox(
             width: 5,
           ),
-          checkIfSentMessageHasAvatar(),
+          messageThumbAvatar(isSent && hasAvatar),
         ],
       ),
     );
   }
 
-  Widget checkIfSentMessageHasAvatar() => (isSent && hasAvatar)
-      ? CircleThumbAvatar(
-          color: userModel.getColor(userModel.id ?? 0),
-          height: 25,
-          width: 25,
-          padding: 0,
-          avatar: userModel.avatar ?? '',
-        )
-      : const SizedBox(
-          width: 25,
-        );
-
-  Widget checkIfReceiveMessageHasAvatar() => (!isSent && hasAvatar)
-      ? CircleThumbAvatar(
-          color: userModel.getColor(userModel.id ?? 0),
-          height: 25,
-          width: 25,
-          padding: 0,
-          avatar: userModel.avatar ?? '',
-        )
-      : const SizedBox(
-          width: 25,
-        );
+  Widget messageThumbAvatar(bool check) {
+    if (check) {
+      return CircleThumbAvatar(
+        color: userModel.getColor(userModel.id ?? 0),
+        height: 25,
+        width: 25,
+        padding: 0,
+        avatar: userModel.avatar ?? '',
+      );
+    }
+    return const SizedBox(
+      width: 25,
+    );
+  }
 }

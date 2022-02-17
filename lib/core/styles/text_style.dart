@@ -3,6 +3,10 @@ import 'package:flutter_skyway/core/architecture/text_extension.dart';
 
 extension BaseTextExtension on Text {
   Text defaultStyle() {
-    return fontSize(14);
+    return fontSize(14).fontWeight(FontWeight.w500);
+  }
+
+  Text messageStyle() {
+    return fontSize(16).fontWeight(FontWeight.w400);
   }
 }
