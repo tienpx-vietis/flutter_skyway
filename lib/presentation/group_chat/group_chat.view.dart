@@ -20,7 +20,7 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Call ${viewModel.getCallTime()}',
+              'Call ${viewModel.callTime}',
               style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w500),
             ),
             Text(
@@ -33,7 +33,9 @@ class GroupChatView extends BaseView<GroupChatViewModel> {
         actions: [
           IconButton(
             icon: const Icon(Icons.more_vert_rounded),
-            onPressed: () {},
+            onPressed: () {
+              viewModel.showSetting(context);
+            },
           )
         ],
       ),

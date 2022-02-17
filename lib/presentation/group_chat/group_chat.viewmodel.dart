@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skyway/presentation/group_chat/message_model.dart';
 import 'package:flutter_skyway/presentation/group_chat/user_model.dart';
+import 'package:flutter_skyway/presentation/group_chat/widgets/end_call_alertdialog.dart';
+import 'package:flutter_skyway/presentation/group_chat/widgets/setting_bottom_sheet.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_skyway/core/base.dart';
@@ -19,6 +21,8 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
   late TextEditingController messageController;
 
   final ScrollController scrollController = ScrollController();
+
+  final callTime = DateFormat('dd.MM.yyyy').format(DateTime.now());
 
   @override
   void onInit() {
@@ -141,7 +145,21 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
     return false;
   }
 
-  String getCallTime() {
-    return DateFormat('dd.MM.yyyy').format(DateTime.now());
+  void showSetting(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      builder: (BuildContext context) {
+        return const SettingBottomSheet();
+      },
+    );
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => const EndCallDialog());
   }
 }
