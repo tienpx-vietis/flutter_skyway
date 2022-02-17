@@ -13,7 +13,6 @@ class HomeView extends BaseView<HomeViewModel> {
         child: Container(
           padding: const EdgeInsets.only(top: 24, left: 24, right: 24),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
@@ -65,7 +64,8 @@ class HomeView extends BaseView<HomeViewModel> {
                                   const Color(0xFFF2F2F2),
                                 ),
                               ),
-                              onPressed: viewModel.setSFUCallMode,
+                              onPressed:
+                                  viewModel.setCallModeType(CallModeType.sfu),
                               child: const Text(
                                 "SFU",
                                 style: TextStyle(
@@ -97,7 +97,8 @@ class HomeView extends BaseView<HomeViewModel> {
                                   const Color(0xFFE14D4D),
                                 ),
                               ),
-                              onPressed: viewModel.setMESHCallMode,
+                              onPressed:
+                                  viewModel.setCallModeType(CallModeType.mesh),
                               child: const Text(
                                 "MESH",
                                 style: TextStyle(
@@ -150,7 +151,7 @@ class HomeView extends BaseView<HomeViewModel> {
                             ),
                           ),
                         ),
-                        onPressed: viewModel.showVideoChatView,
+                        onPressed: viewModel.toHostVideoChat,
                         child: const Text(
                           "HOST",
                           style: TextStyle(
@@ -177,7 +178,7 @@ class HomeView extends BaseView<HomeViewModel> {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: viewModel.toJoinVideoChat,
                         child: const Text(
                           "JOIN",
                           style: TextStyle(

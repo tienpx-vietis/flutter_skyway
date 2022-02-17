@@ -11,15 +11,14 @@ enum CallModeType { sfu, mesh }
 class HomeViewModel = _HomeViewModel with _$HomeViewModel;
 
 abstract class _HomeViewModel extends BaseViewModel with Store {
-  final formKey = GlobalKey<FormState>();
-
-  bool get isFormValid => formKey.currentState?.validate() ?? false;
-
   @observable
   String roomName = "";
 
   @observable
   CallModeType callMode = CallModeType.sfu;
+
+  final formKey = GlobalKey<FormState>();
+  bool get isFormValid => formKey.currentState?.validate() ?? false;
 
   @override
   void onInit() {
@@ -27,20 +26,22 @@ abstract class _HomeViewModel extends BaseViewModel with Store {
   }
 
   @action
-  showVideoChatView() {
+  toHostVideoChat() {
     if (isFormValid) {
       Get.toNamed(Routes.VIDEO_CHAT);
     }
   }
 
   @action
-  setSFUCallMode() {
-    callMode = CallModeType.sfu;
+  toJoinVideoChat() {
+    if (isFormValid) {
+      Get.toNamed(Routes.VIDEO_CHAT);
+    }
   }
 
   @action
-  setMESHCallMode() {
-    callMode = CallModeType.mesh;
+  setCallModeType(CallModeType callModeType) {
+    callMode = callModeType;
   }
 
   @action
