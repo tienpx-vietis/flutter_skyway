@@ -7,7 +7,6 @@ extension BaseTextExtension on Text {
         .fontFamily(FontFamily.roboto)
         .fontStyle(FontStyle.normal);
   }
-
   Text messageStyle() {
     return fontSize(16).fontWeight(FontWeight.w400);
   }
