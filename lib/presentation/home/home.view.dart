@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_skyway/core/base.dart';
 import 'package:flutter_skyway/presentation/home/home.viewmodel.dart';
 
+import '../common.widgets/widgets.dart';
+
 class HomeView extends BaseView<HomeViewModel> {
   const HomeView({Key? key}) : super(key: key);
 
@@ -15,29 +17,23 @@ class HomeView extends BaseView<HomeViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Start Video Call",
-                style: TextStyle(
-                  fontFamily: FontFamily.roboto,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF222222),
-                ),
-              ),
+              const Text("Start Video Call")
+                  .defaultStyle()
+                  .fontSize(20)
+                  .fontWeight(FontWeight.w500)
+                  .color(
+                    const Color(0xFF222222),
+                  ),
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                "Start video call in mode: ",
-                style: TextStyle(
-                  fontFamily: FontFamily.roboto,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 15,
-                  color: Color(0xFF222222),
-                ),
-              ),
+              const Text("Start video call in mode:")
+                  .defaultStyle()
+                  .fontWeight(FontWeight.w400)
+                  .fontSize(15)
+                  .color(
+                    const Color(0xFF222222),
+                  ),
               const SizedBox(
                 height: 24,
               ),
@@ -51,29 +47,14 @@ class HomeView extends BaseView<HomeViewModel> {
                           flex: 1,
                           child: SizedBox(
                             height: 39,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                  const Color(0xFFF2F2F2),
-                                ),
-                              ),
-                              onPressed:
+                            child: NormalButton(
+                              backgroundColor: Colors.white,
+                              onPressed: () =>
                                   viewModel.setCallModeType(CallModeType.sfu),
-                              child: const Text(
-                                "SFU",
-                                style: TextStyle(
-                                    fontFamily: FontFamily.roboto,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13,
-                                    color: Colors.black),
-                              ),
+                              child: const Text("SFU")
+                                  .defaultStyle()
+                                  .fontSize(13)
+                                  .color(Colors.black),
                             ),
                           ),
                         ),
@@ -84,29 +65,14 @@ class HomeView extends BaseView<HomeViewModel> {
                           flex: 1,
                           child: SizedBox(
                             height: 39,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                  const Color(0xFFE14D4D),
-                                ),
-                              ),
-                              onPressed:
+                            child: NormalButton(
+                              backgroundColor: const Color(0xFFE14D4D),
+                              child: const Text("MESH")
+                                  .defaultStyle()
+                                  .fontSize(13)
+                                  .color(Colors.white),
+                              onPressed: () =>
                                   viewModel.setCallModeType(CallModeType.mesh),
-                              child: const Text(
-                                "MESH",
-                                style: TextStyle(
-                                    fontFamily: FontFamily.roboto,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13,
-                                    color: Colors.white),
-                              ),
                             ),
                           ),
                         ),
@@ -142,25 +108,12 @@ class HomeView extends BaseView<HomeViewModel> {
                     SizedBox(
                       width: double.infinity,
                       height: 39,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7),
-                            ),
-                          ),
-                        ),
+                      child: NormalButton(
+                        child: const Text("HOST")
+                            .defaultStyle()
+                            .fontWeight(FontWeight.w500)
+                            .color(Colors.white),
                         onPressed: viewModel.toHostVideoChat,
-                        child: const Text(
-                          "HOST",
-                          style: TextStyle(
-                            fontFamily: FontFamily.roboto,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
                       ),
                     ),
                     const SizedBox(
@@ -169,25 +122,12 @@ class HomeView extends BaseView<HomeViewModel> {
                     SizedBox(
                       width: double.infinity,
                       height: 39,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7),
-                            ),
-                          ),
-                        ),
+                      child: NormalButton(
                         onPressed: viewModel.toJoinVideoChat,
-                        child: const Text(
-                          "JOIN",
-                          style: TextStyle(
-                            fontFamily: FontFamily.roboto,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: const Text("JOIN")
+                            .defaultStyle()
+                            .fontWeight(FontWeight.w500)
+                            .color(Colors.white),
                       ),
                     ),
                   ],
