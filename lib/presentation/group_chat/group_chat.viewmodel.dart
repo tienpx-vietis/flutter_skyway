@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skyway/presentation/group_chat/message_model.dart';
 import 'package:flutter_skyway/presentation/group_chat/user_model.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_skyway/core/base.dart';
 
@@ -17,17 +18,17 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
 
   late TextEditingController messageController;
 
+  final ScrollController scrollController = ScrollController();
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-
     messageController = TextEditingController();
 
     users = [
-      UserModel(id: 1, name: 'user1'),
-      UserModel(id: 2, name: 'user2'),
-      UserModel(id: 3, name: 'user3'),
+      UserModel(id: 1, name: 'user1', avatar: 'assets/images/pic1.jpg'),
+      UserModel(id: 2, name: 'user2', avatar: 'assets/images/pic2.jpg'),
+      UserModel(id: 3, name: 'user3', avatar: 'assets/images/pic3.jpg'),
     ];
 
     messages = [
@@ -106,7 +107,6 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     messageController.dispose();
   }
@@ -123,9 +123,14 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
         ...messages
       ];
     }
+    messageController.clear();
+    scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 
-  @action
   bool hasAvatar(int index) {
     if (index == 0) {
       return true;
@@ -134,5 +139,9 @@ abstract class _GroupChatViewModel extends BaseViewModel with Store {
       return true;
     }
     return false;
+  }
+
+  String getCallTime() {
+    return DateFormat('dd.MM.yyyy').format(DateTime.now());
   }
 }
