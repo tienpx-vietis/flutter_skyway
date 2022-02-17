@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_skyway/core/base.dart';
-import 'package:get/get.dart';
 import 'package:mobx/mobx.dart';
 
 import '../app/app.pages.dart';
+import 'home.suc.dart';
 
 part 'home.viewmodel.g.dart';
 
@@ -11,6 +11,10 @@ enum CallModeType { sfu, mesh }
 class HomeViewModel = _HomeViewModel with _$HomeViewModel;
 
 abstract class _HomeViewModel extends BaseViewModel with Store {
+  HomeSceneUseCaseType useCase;
+
+  _HomeViewModel(this.useCase);
+
   @observable
   String roomName = "";
 
@@ -21,8 +25,12 @@ abstract class _HomeViewModel extends BaseViewModel with Store {
   bool get isFormValid => formKey.currentState?.validate() ?? false;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    (await useCase.getUsers()).when(
+      success: print,
+      failure: print,
+    );
   }
 
   @action
