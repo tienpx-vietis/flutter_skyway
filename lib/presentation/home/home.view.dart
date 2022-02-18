@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_skyway/core/base.dart';
 import 'package:flutter_skyway/presentation/home/home.viewmodel.dart';
 
@@ -47,14 +48,16 @@ class HomeView extends BaseView<HomeViewModel> {
                           flex: 1,
                           child: SizedBox(
                             height: 39,
-                            child: NormalButton(
-                              backgroundColor: Colors.white,
-                              onPressed: () =>
-                                  viewModel.setCallModeType(CallModeType.sfu),
-                              child: const Text("SFU")
-                                  .defaultStyle()
-                                  .fontSize(13)
-                                  .color(Colors.black),
+                            child: Observer(
+                              builder: (_) => NormalButton(
+                                backgroundColor: viewModel.callMode == CallModeType.sfu ? const Color(0xFFE14D4D) : Colors.white,
+                                onPressed: () =>
+                                    viewModel.setCallModeType(CallModeType.sfu),
+                                child: const Text("SFU")
+                                    .defaultStyle()
+                                    .fontSize(13)
+                                    .color(viewModel.callMode == CallModeType.sfu ? Colors.white : Colors.black),
+                              ),
                             ),
                           ),
                         ),
@@ -65,14 +68,16 @@ class HomeView extends BaseView<HomeViewModel> {
                           flex: 1,
                           child: SizedBox(
                             height: 39,
-                            child: NormalButton(
-                              backgroundColor: const Color(0xFFE14D4D),
-                              child: const Text("MESH")
-                                  .defaultStyle()
-                                  .fontSize(13)
-                                  .color(Colors.white),
-                              onPressed: () =>
-                                  viewModel.setCallModeType(CallModeType.mesh),
+                            child: Observer(
+                              builder: (_) => NormalButton(
+                                backgroundColor: viewModel.callMode == CallModeType.mesh ? const Color(0xFFE14D4D) : Colors.white,
+                                child: const Text("MESH")
+                                    .defaultStyle()
+                                    .fontSize(13)
+                                    .color(viewModel.callMode == CallModeType.sfu ? Colors.black : Colors.white),
+                                onPressed: () =>
+                                    viewModel.setCallModeType(CallModeType.mesh),
+                              ),
                             ),
                           ),
                         ),
