@@ -62,7 +62,7 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                       const Spacer(),
                       ImageButton(
                         child: const SizedBox(height: 44, width: 44, child: Icon(Icons.add)),
-                        onPressed: viewModel.increaseNumberOfPeople,
+                        onPressed: viewModel.increaseNotification,
                       ),
                       const Spacer(),
                       GestureDetector(
@@ -620,10 +620,9 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
     return Observer(
       builder: (_) => ListView.builder(
         shrinkWrap: true,
-        itemCount: viewModel.incomingPeople.length,
+        itemCount: viewModel.notifications.length,
         itemBuilder: (_, index) {
-          return buildNotificationItem(
-              viewModel.incomingPeople[index].circleImage, viewModel.incomingPeople[index].name);
+          return buildNotificationItem(viewModel.notifications[index].circleImage, viewModel.notifications[index].name);
         },
       ),
     );
