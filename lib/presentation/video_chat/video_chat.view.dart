@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skyway/core/base.dart';
 import 'package:flutter_skyway/presentation/video_chat/video_chat.viewmodel.dart';
@@ -13,104 +14,142 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
     return Scaffold(
       backgroundColor: const Color(0xFF14161C),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            SizedBox(
-              height: 20.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 44,
-                    height: 44,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          child: Assets.images.icCircleBtnChat.svg(height: 44, width: 44),
-                        ),
-                        Positioned(
-                            top: -4,
-                            left: 27,
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                              height: 24,
-                              width: 24,
-                              child: const Text(
-                                "1",
-                                style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 13),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 44,
+                        height: 44,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              child: Assets.images.icCircleBtnChat.svg(height: 44, width: 44),
+                            ),
+                            Positioned(
+                              top: -4,
+                              left: 27,
+                              child: Container(
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                                height: 24,
+                                width: 24,
+                                child: const Text(
+                                  "1",
+                                  style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 13),
+                                ),
                               ),
-                            ))
-                      ],
-                    ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      ImageButton(
+                        child: const SizedBox(height: 44, width: 44, child: Icon(Icons.add)),
+                        onPressed: viewModel.increaseNumberOfPeople,
+                      ),
+                      const Spacer(),
+                      ImageButton(
+                        child: Assets.images.icCircleBtnMore.svg(height: 44, width: 44),
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
-                  const Spacer(),
-                  Assets.images.icCircleBtnMore.svg(height: 44, width: 44),
-                ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Observer(
+                  builder: (_) => Expanded(
+                    child: _buildVideoChat(viewModel.numberOfPeople),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ImageButton(
+                        child: Assets.images.icCircleBtnRotate.svg(
+                          height: 58,
+                          width: 58,
+                        ),
+                        onPressed: viewModel.rotateCameraTrigger,
+                      ),
+                      ImageButton(
+                        onPressed: viewModel.toggleCameraTrigger,
+                        child: Assets.images.icCircleBtnCamera.svg(
+                          height: 58,
+                          width: 58,
+                        ),
+                      ),
+                      ImageButton(
+                        onPressed: viewModel.toggleMicTrigger,
+                        child: Assets.images.icCircleBtnMic.svg(
+                          height: 58,
+                          width: 58,
+                        ),
+                      ),
+                      ImageButton(
+                        onPressed: viewModel.declineTrigger,
+                        child: Assets.images.icCircleBtnDecline.svg(
+                          height: 58,
+                          width: 58,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 18,
+                )
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 86),
+                child: _buildNotification(),
               ),
             ),
-            const SizedBox(
-              height: 12,
-            ),
-            Expanded(
-              child: buildVideoChat3People(),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ImageButton(
-                    child: Assets.images.icCircleBtnRotate.svg(
-                      height: 58,
-                      width: 58,
-                    ),
-                    onPressed: viewModel.rotateCameraTrigger,
-                  ),
-                  ImageButton(
-                    onPressed: viewModel.toggleCameraTrigger,
-                    child: Assets.images.icCircleBtnCamera.svg(
-                      height: 58,
-                      width: 58,
-                    ),
-                  ),
-                  ImageButton(
-                    onPressed: viewModel.toggleMicTrigger,
-                    child: Assets.images.icCircleBtnMic.svg(
-                      height: 58,
-                      width: 58,
-                    ),
-                  ),
-                  ImageButton(
-                    onPressed: viewModel.declineTrigger,
-                    child: Assets.images.icCircleBtnDecline.svg(
-                      height: 58,
-                      width: 58,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 34,
-            )
           ],
         ),
       ),
     );
   }
 
-  Column buildVideoChat2People() {
+  Widget _buildVideoChat(int numberOfPeople) {
+    debugPrint(numberOfPeople.toString());
+    switch (numberOfPeople) {
+      case 1:
+        return _buildVideoChat1Person();
+      case 2:
+        return _buildVideoChat2People();
+      case 3:
+        return _buildVideoChat3People();
+      case 4:
+        return _buildVideoChat4People();
+      default:
+        return Container();
+    }
+  }
+
+  Column _buildVideoChat2People() {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -281,7 +320,7 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
     );
   }
 
-  Center buildVideoChat1Person() {
+  Widget _buildVideoChat1Person() {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -362,7 +401,7 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
     );
   }
 
-  Widget buildVideoChat3People() {
+  Widget _buildVideoChat3People() {
     return Column(
       children: [
         Expanded(
@@ -560,57 +599,6 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                     ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Container(
-                      height: 45,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: const Color(0xFF272F38).withOpacity(0.92),
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            height: 25,
-                            width: 25,
-                            child: CircleAvatar(
-                              child: Assets.images.imgAvatarPlaceHolder.image(),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          RichText(
-                            text: const TextSpan(
-                                text: "Danil ",
-                                style: TextStyle(
-                                  fontFamily: FontFamily.roboto,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: "joined the voice chat.",
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.roboto,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14,
-                                    ),
-                                  )
-                                ]),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
@@ -619,18 +607,81 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
     );
   }
 
-  Widget buildVideoChat4People() {
+  Widget _buildNotification() {
+    return Observer(
+      builder: (_) => ListView.builder(
+        shrinkWrap: true,
+        itemCount: viewModel.incomingPeople.length,
+        itemBuilder: (_, index) {
+          return buildNotificationItem(
+              viewModel.incomingPeople[index].circleImage, viewModel.incomingPeople[index].name);
+        },
+      ),
+    );
+  }
+
+  Widget buildNotificationItem(Widget circleWidget, String name) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: 45,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: const Color(0xFF272F38).withOpacity(0.92),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 10,
+          ),
+          SizedBox(
+            height: 25,
+            width: 25,
+            child: CircleAvatar(
+              child: circleWidget,
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          RichText(
+            text: TextSpan(
+                text: name,
+                style: const TextStyle(
+                  fontFamily: FontFamily.roboto,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
+                children: const [
+                  TextSpan(
+                    text: " joined the voice chat.",
+                    style: TextStyle(
+                      fontFamily: FontFamily.roboto,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                    ),
+                  )
+                ]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVideoChat4People() {
     return Column(
       children: [
         Expanded(
           child: Row(
             children: [
-              buildItemVideoChat(
+              _buildItemVideoChat(
                 name: "You",
                 backgroundImage: Assets.images.imgAvatarPlaceHolder2.image(fit: BoxFit.cover),
                 circleImage: Assets.images.imgCircleAvartarPlaceHolder.image(width: 84, height: 84, fit: BoxFit.cover),
               ),
-              buildItemVideoChat(
+              _buildItemVideoChat(
                 name: "You",
                 backgroundImage: Assets.images.imgAvatarPlaceHolder2.image(fit: BoxFit.cover),
                 circleImage: Assets.images.imgCircleAvartarPlaceHolder.image(width: 84, height: 84, fit: BoxFit.cover),
@@ -641,12 +692,12 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
         Expanded(
           child: Row(
             children: [
-              buildItemVideoChat(
+              _buildItemVideoChat(
                 name: "You",
                 backgroundImage: Assets.images.imgAvatarPlaceHolder2.image(fit: BoxFit.cover),
                 circleImage: Assets.images.imgCircleAvartarPlaceHolder.image(width: 84, height: 84, fit: BoxFit.cover),
               ),
-              buildItemVideoChat(
+              _buildItemVideoChat(
                 name: "You",
                 backgroundImage: Assets.images.imgAvatarPlaceHolder2.image(fit: BoxFit.cover),
                 circleImage: Assets.images.imgCircleAvartarPlaceHolder.image(width: 84, height: 84, fit: BoxFit.cover),
@@ -658,7 +709,7 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
     );
   }
 
-  Widget buildItemVideoChat({required String name, required Image backgroundImage, required Image circleImage}) {
+  Widget _buildItemVideoChat({required String name, required Image backgroundImage, required Image circleImage}) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(4),
