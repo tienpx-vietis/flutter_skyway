@@ -26,32 +26,37 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     children: [
-                      SizedBox(
-                        width: 44,
-                        height: 44,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              child: Assets.images.icCircleBtnChat.svg(height: 44, width: 44),
-                            ),
-                            Positioned(
-                              top: -4,
-                              left: 27,
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                                height: 24,
-                                width: 24,
-                                child: const Text(
-                                  "1",
-                                  style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 13),
-                                ),
+                      GestureDetector(
+                        onTap: () {
+                          viewModel.goToChat();
+                        },
+                        child: SizedBox(
+                          width: 44,
+                          height: 44,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                child: Assets.images.icCircleBtnChat.svg(height: 44, width: 44),
                               ),
-                            )
-                          ],
+                              Positioned(
+                                top: -4,
+                                left: 27,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                                  height: 24,
+                                  width: 24,
+                                  child: const Text(
+                                    "1",
+                                    style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 13),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       const Spacer(),
@@ -60,9 +65,11 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                         onPressed: viewModel.increaseNumberOfPeople,
                       ),
                       const Spacer(),
-                      ImageButton(
+                      GestureDetector(
+                        onTap: () {
+                          viewModel.showSetting(context);
+                        },
                         child: Assets.images.icCircleBtnMore.svg(height: 44, width: 44),
-                        onPressed: () {},
                       ),
                     ],
                   ),
@@ -106,7 +113,9 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                         ),
                       ),
                       ImageButton(
-                        onPressed: viewModel.declineTrigger,
+                        onPressed: () {
+                          viewModel.declineTrigger(context);
+                        },
                         child: Assets.images.icCircleBtnDecline.svg(
                           height: 58,
                           width: 58,

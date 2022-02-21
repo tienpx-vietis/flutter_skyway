@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_skyway/core/base.dart';
 import 'package:flutter_skyway/presentation/video_chat/video_chat.suc.dart';
 import 'package:get/get.dart';
@@ -6,15 +6,15 @@ import 'package:mobx/mobx.dart';
 
 import '../../domain/entities/skyway_peer.dart';
 import '../../utils/constants.dart';
+import '../app/app.pages.dart';
+import 'group_chat/widgets/end_call_aleartdialog.dart';
+import 'group_chat/widgets/setting_bottomsheet.dart';
 
 part 'video_chat.viewmodel.g.dart';
 
 class VideoChatViewModel = _VideoChatViewModel with _$VideoChatViewModel;
 
 abstract class _VideoChatViewModel extends BaseViewModel with Store {
-  @observable
-  bool isShowingNotification = true;
-
   @observable
   int numberOfPeople = 1;
 
@@ -46,7 +46,9 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
   toggleMicTrigger() {}
 
   @action
-  declineTrigger() {}
+  declineTrigger(BuildContext context) {
+    showAlertDialog(context);
+  }
 
   @action
   increaseNumberOfPeople() async {
@@ -70,6 +72,35 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
 
   void _onSkywayEvent(SkywayEvent event, Map<dynamic, dynamic> args) {
     print(event);
+  }
+
+  void goToChat() {
+    Get.toNamed(Routes.GROUP_CHAT);
+  }
+
+  void showSetting(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      builder: (BuildContext context) {
+        return SettingBottomSheet(
+          onRecordSelected: () {},
+          onShareSelected: () {},
+        );
+      },
+    );
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => EndCallDialog(
+              onEndCall: () {
+                Get.back();
+              },
+            ));
   }
 }
 
