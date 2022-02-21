@@ -18,7 +18,7 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
   @observable
   int numberOfPeople = 1;
 
-  ObservableList<Notification> notifications = ObservableList();
+  ObservableList<IncomingPeopleNotification> notifications = ObservableList();
 
   VideoChatSceneUseCaseType useCase;
 
@@ -54,7 +54,8 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
   increaseNotification() async {
     numberOfPeople = (numberOfPeople + 1) % 4 + 1;
     notifications.add(
-      Notification(Assets.images.imgAvatarPlaceHolder.image(), "John ${notifications.length + 1}"),
+      IncomingPeopleNotification(
+          circleImage: Assets.images.imgAvatarPlaceHolder.image(), name: "John ${notifications.length + 1}"),
     );
     await Future.delayed(
       const Duration(seconds: 2),
@@ -104,13 +105,9 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
   }
 }
 
-class Notification {
-  final Widget _circleImage;
-  final String _name;
+class IncomingPeopleNotification {
+  final Widget circleImage;
+  final String name;
 
-  Widget get circleImage => _circleImage;
-
-  String get name => _name;
-
-  Notification(this._circleImage, this._name);
+  IncomingPeopleNotification({required this.circleImage, required this.name});
 }

@@ -60,11 +60,6 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                         ),
                       ),
                       const Spacer(),
-                      ImageButton(
-                        child: const SizedBox(height: 44, width: 44, child: Icon(Icons.add)),
-                        onPressed: viewModel.increaseNotification,
-                      ),
-                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           viewModel.showSetting(context);
@@ -79,7 +74,7 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                 ),
                 Observer(
                   builder: (_) => Expanded(
-                    child: _buildVideoChat(viewModel.numberOfPeople),
+                    child: _buildVideoChat(),
                   ),
                 ),
                 const SizedBox(
@@ -142,9 +137,8 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
     );
   }
 
-  Widget _buildVideoChat(int numberOfPeople) {
-    debugPrint(numberOfPeople.toString());
-    switch (numberOfPeople) {
+  Widget _buildVideoChat() {
+    switch (viewModel.numberOfPeople) {
       case 1:
         return _buildVideoChat1Person();
       case 2:
