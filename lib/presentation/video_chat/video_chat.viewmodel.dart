@@ -58,6 +58,13 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
   @observable
   bool isAudioEnabled = true;
 
+  @observable
+  bool isFullScreenEnabled = false;
+
+  Widget videoFullScreen = Container(
+    color: Colors.white,
+  );
+
   @override
   void onInit() async {
     super.onInit();
@@ -104,8 +111,7 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
   @action
   increaseNotification(String remotePeerId) async {
     notifications.add(
-      IncomingPeopleNotification(
-          circleImage: Assets.images.imgAvatarPlaceHolder.image(), name: "#remotePeerId $remotePeerId"),
+      IncomingPeopleNotification(circleImage: Assets.images.imgAvatarPlaceHolder.image(), name: remotePeerId),
     );
     await Future.delayed(
       const Duration(seconds: 5),
@@ -113,6 +119,11 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
         notifications.removeAt(0);
       },
     );
+  }
+
+  @action
+  setVideoFullScreen(Widget value) {
+    videoFullScreen = value;
   }
 
   @override
@@ -132,7 +143,7 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
     }
   }
 
-  void _onShareSkywayEvent(SkywayEvent event, Map<dynamic, dynamic> args) { }
+  void _onShareSkywayEvent(SkywayEvent event, Map<dynamic, dynamic> args) {}
 
   Future<bool> checkPermission() async {
     var cameraStatus = await Permission.camera.status;
@@ -165,11 +176,11 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
     await peer?.join(roomName, SkywayRoomMode.SFU);
   }
 
-    void _onSkywayEvent(SkywayEvent event, Map<dynamic, dynamic> args) {
+  void _onSkywayEvent(SkywayEvent event, Map<dynamic, dynamic> args) {
     switch (event) {
       case SkywayEvent.onConnect:
         _onConnect(args['peerId']);
-      break;
+        break;
       case SkywayEvent.onDisconnect:
         _onDisconnect(args['peerId']);
         break;
