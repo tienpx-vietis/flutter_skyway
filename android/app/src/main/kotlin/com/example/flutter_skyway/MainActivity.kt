@@ -101,6 +101,9 @@ class MainActivity : FlutterActivity() {
             "reject" -> {
                 reject(call, result)
             }
+            "switchCamera" -> {
+                switchCamera(call, result)
+            }
             "requestShareScreenPermission" -> {
                 requestShareScreenPermission(call, result)
             }
@@ -347,6 +350,18 @@ class MainActivity : FlutterActivity() {
         startActivityForResult(mProjectionManager.createScreenCaptureIntent(), CAPTURE_PERMISSION_REQUEST_CODE);
         ShareService.mListener = OnShareServiceListener() {
             result.success("success");
+        }
+    }
+
+    private fun switchCamera(call: MethodCall, result: MethodChannel.Result) {
+        if (DEBUG) Log.v(TAG, "switchCamera:${call}")
+        val peerId = call.argument<String>("peerId")
+        val peer = getPeer(peerId)
+        if (peer != null) {
+            peer.switchCamera();
+            result.success("success")
+        } else {
+            result.error("Failed to call", "Failed to call", "")
         }
     }
 }

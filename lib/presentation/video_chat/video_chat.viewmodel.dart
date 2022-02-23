@@ -66,7 +66,9 @@ abstract class _VideoChatViewModel extends BaseViewModel with Store {
   }
 
   @action
-  rotateCameraTrigger() {}
+  rotateCameraTrigger() {
+    peer?.switchCamera();
+  }
 
   @action
   toggleCameraTrigger() {}

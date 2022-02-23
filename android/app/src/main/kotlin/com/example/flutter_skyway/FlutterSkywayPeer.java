@@ -318,6 +318,10 @@ public class FlutterSkywayPeer {
         }
     }
 
+    public void switchCamera() {
+        _localStream.switchCamera();
+    }
+
     public void release() {
         if (DEBUG) Log.v(TAG, "release:");
         closeRemoteStreamAll();

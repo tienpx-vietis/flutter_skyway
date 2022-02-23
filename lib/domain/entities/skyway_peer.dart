@@ -110,11 +110,10 @@ class SkywayPeer {
     });
   }
 
-  Future<void> switchCamera(CameraMode mode) async {
+  Future<void> switchCamera() async {
     print("switchCamera:");
     return await channel.invokeMethod('switchCamera', {
-      'peerId': peerId,
-      'mode': mode.index,
+      'peerId': peerId
     });
   }
 
