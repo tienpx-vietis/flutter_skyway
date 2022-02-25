@@ -9,11 +9,15 @@ extension BuildVideoChat4People on VideoChatView {
             children: [
               _buildItemVideoChat(
                 name: "You",
-                uiVideoChatView: _buildLocalVideo(),
+                uiItemVideoView: Assets.images.imgAvatarPlaceHolder2
+                    .image(fit: BoxFit.cover),
+
               ),
               _buildItemVideoChat(
-                name: "User1",
-                uiVideoChatView: _createRemoteView(viewModel.peers.keys.first),
+                name: "You",
+                uiItemVideoView: _createRemoteView(
+                    viewModel.peers.keys.first),
+
               ),
             ],
           ),
@@ -22,14 +26,15 @@ extension BuildVideoChat4People on VideoChatView {
           child: Row(
             children: [
               _buildItemVideoChat(
-                name: "User2",
-                uiVideoChatView:
-                    _createRemoteView(viewModel.peers.keys.elementAt(1)),
+                name: "You",
+                uiItemVideoView: _createRemoteView(
+                    viewModel.peers.keys.elementAt(1)),
               ),
               _buildItemVideoChat(
-                name: "User3",
-                uiVideoChatView:
-                    _createRemoteView(viewModel.peers.keys.elementAt(2)),
+                name: "You",
+                uiItemVideoView: _createRemoteView(
+                    viewModel.peers.keys.elementAt(2)),
+
               ),
             ],
           ),
@@ -39,7 +44,8 @@ extension BuildVideoChat4People on VideoChatView {
   }
 
   Widget _buildItemVideoChat(
-      {required String name, required Widget uiVideoChatView}) {
+      {required String name,
+      required Widget uiItemVideoView}) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(4),
@@ -48,7 +54,7 @@ extension BuildVideoChat4People on VideoChatView {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: uiVideoChatView,
+              child: uiItemVideoView,
             ),
             Container(
               decoration: BoxDecoration(
@@ -87,6 +93,13 @@ extension BuildVideoChat4People on VideoChatView {
                 child: Assets.images.icDots.svg(height: 24, width: 24),
               ),
             ),
+            // const Align(
+            //   alignment: Alignment.center,
+            //   child: CircularProgressIndicator(
+            //     color: Colors.white,
+            //     strokeWidth: 2,
+            //   ),
+            // ),
           ],
         ),
       ),
