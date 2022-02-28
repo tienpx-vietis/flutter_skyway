@@ -9,15 +9,11 @@ import 'package:flutter_skyway/presentation/common.widgets/image_button.dart';
 import 'package:flutter_skyway/presentation/video_chat/video_chat.viewmodel.dart';
 import 'package:flutter_skyway/presentation/video_chat/widgets/skyway_canvas_view.dart';
 
-part 'widgets/video_view.dart';
-
 part 'widgets/video_chat_item/build_video_chat_1_person.dart';
-
 part 'widgets/video_chat_item/build_video_chat_2_people.dart';
-
 part 'widgets/video_chat_item/build_video_chat_3_people.dart';
-
 part 'widgets/video_chat_item/build_video_chat_4_people.dart';
+part 'widgets/video_view.dart';
 
 class VideoChatView extends BaseView<VideoChatViewModel> {
   const VideoChatView({Key? key}) : super(key: key);
@@ -57,25 +53,6 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
                                 child: Assets.images.icCircleBtnChat
                                     .svg(height: 44, width: 44),
                               ),
-                              // Positioned(
-                              //   top: -4,
-                              //   left: 27,
-                              //   child: Container(
-                              //     alignment: Alignment.center,
-                              //     decoration: const BoxDecoration(
-                              //         color: Colors.red,
-                              //         shape: BoxShape.circle),
-                              //     height: 24,
-                              //     width: 24,
-                              //     child: const Text(
-                              //       "1",
-                              //       style: TextStyle(
-                              //           color: Colors.white,
-                              //           fontStyle: FontStyle.normal,
-                              //           fontSize: 13),
-                              //     ),
-                              //   ),
-                              // )
                             ],
                           ),
                         ),
@@ -250,6 +227,40 @@ class VideoChatView extends BaseView<VideoChatViewModel> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Visibility buildCloseButton({
+    required bool visible,
+    required GestureTapCallback onTap,
+  }) {
+    return Visibility(
+      visible: visible,
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: GestureDetector(
+          onTap: onTap,
+          child: const Padding(
+            padding: EdgeInsets.all(8),
+            child: Icon(Icons.close, size: 48, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Visibility buildLoading({required bool visible}) {
+    return Visibility(
+      visible: visible,
+      child: const Align(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: CircularProgressIndicator(
+            value: null,
+          ),
+        ),
       ),
     );
   }

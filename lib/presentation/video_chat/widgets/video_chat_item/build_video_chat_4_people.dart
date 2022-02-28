@@ -130,32 +130,11 @@ extension BuildVideoChat4People on VideoChatView {
                   child: Assets.images.icDots.svg(height: 24, width: 24),
                 ),
               ),
-              Visibility(
-                visible: viewModel.isLoading,
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: CircularProgressIndicator(
-                      value: null,
-                    ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: viewModel.checkVisibilityByIndex(index) &&
-                    viewModel.isFullScreenEnabled,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: GestureDetector(
-                    onTap: viewModel.disableFullscreenVideoMode,
-                    child: const Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Icon(Icons.close, size: 48, color: Colors.white),
-                    ),
-                  ),
-                ),
-              )
+              buildLoading(visible: viewModel.isLoading),
+              buildCloseButton(
+                  visible: viewModel.checkVisibilityByIndex(index) &&
+                      viewModel.isFullScreenEnabled,
+                  onTap: viewModel.disableFullscreenVideoMode),
             ],
           ),
         ),
