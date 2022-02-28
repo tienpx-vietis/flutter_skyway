@@ -93,23 +93,10 @@ extension BuildVideoChat2Person on VideoChatView {
                           ),
                         ),
                       ),
-                      Visibility(
-                        visible: viewModel.checkVisibilityByIndex(1) &&
-                            viewModel.isFullScreenEnabled,
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              viewModel.disableFullscreenVideoMode();
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Icon(Icons.close,
-                                  size: 48, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
+                      buildCloseButton(
+                          visible: viewModel.checkVisibilityByIndex(1) &&
+                              viewModel.isFullScreenEnabled,
+                          onTap: viewModel.disableFullscreenVideoMode)
                     ],
                   ),
                 ),
@@ -208,33 +195,11 @@ extension BuildVideoChat2Person on VideoChatView {
                           ),
                         ),
                       ),
-                      Visibility(
-                        visible: viewModel.checkVisibilityByIndex(2) &&
-                            viewModel.isFullScreenEnabled,
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: GestureDetector(
-                            onTap: viewModel.disableFullscreenVideoMode,
-                            child: const Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Icon(Icons.close,
-                                  size: 48, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: viewModel.isLoading,
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.all(8),
-                            child: CircularProgressIndicator(
-                              value: null,
-                            ),
-                          ),
-                        ),
-                      ),
+                      buildCloseButton(
+                          visible: viewModel.checkVisibilityByIndex(2) &&
+                              viewModel.isFullScreenEnabled,
+                          onTap: viewModel.disableFullscreenVideoMode),
+                      buildLoading(visible: viewModel.isLoading),
                     ],
                   ),
                 ),
